@@ -1,4 +1,4 @@
-import java.util.Scanner; 
+﻿import java.util.Scanner; 
 import java.lang.String; 
 
 /**
@@ -9,169 +9,260 @@ import java.lang.String;
  */
 public class qcm
 {
-    public static void separation (){
-        System.out.println ("<");
-        for (int separation = 0; separation <=20; separation ++){
-            System.out.println ("="); 
-        } 
-        System.out.println (">");
-    }
-    
     public static void main (String[] args) {    
-       
+
         // [All] Variables a initialiser : 
         
         int type_cotation;
         int colonne; 
         int ligne; 
         int nombre_question = 10; 
-        int resultats_entrainement = 0; 
-        int resultats_test = 0; 
+        
+        // Les reponses : 
+        String reponses_vraies;
+        String reponses_fausses;
+        
+        // Les resultats : 
+        int resultats_facile = 0;
+        double resultats_intermédiaire = 0;
+        int resultats_test = 0;
+        
+        // Recommencer ?
         boolean again = false;
-    
+
         // [Victor] Afficher les regles : 
-        
-        System.out.println (" Le mode d'entrainement : + 1 par bonne réponse"); 
-        System.out.println (" Le mode de test : + 1 par bonne réponse et - 1 par mauvaise réponse"); 
-        
+
+        System.out.println ("/n Les regles :");
+        System.out.println (" Chaque question s'affichera séparement avec toutes ses réponses et vous devrez alors entrer UNE réponse possible.");
+        System.out.println (" Vous aurez alors la possibilité de rentrer d'autres réponses possibles.");
+        System.out.println (" Une question, qui demande deux bonnes réponses en entrée et que vous ne répondez que par une seule bonne réponse, sera considerée comme fausse");
+        System.out.println (" Il vous sera présenté 4 modes de correction différents."); 
+        System.out.println (" \t 1) Le mode facile : + 1 par bonne réponse et 0 par mauvaise réponse"); 
+        System.out.println (" \t 2) Le mode intermédiaire : + 1 par bonne réponse et - 0,5 par mauvaise réponse"); 
+        System.out.println (" \t 3) Le mode de test : + 1 par bonne réponse et - 1 par mauvaise réponse"); 
+        System.out.println (" \t 4) le mode d'entrainement qui affichera vos points pour chacun des modes de correction. "); 
+
         do {
-            
+
             // [Victor] Choix du type de cotation :
-          
+
             System.out.println ("Veuillez entrer votre mode de cotation : ");
-            System.out.println ("\t 1) Mode d'entrainement "); 
-            System.out.println ("\t 2) Mode de test "); 
-            
+            System.out.println ("\t 1) Le mode facile"); 
+            System.out.println ("\t 2) Le mode intermediaire"); 
+            System.out.println ("\t 3) Le mode test"); 
+            System.out.println ("\t 4) Le mode entrainement"); 
+
             Scanner type_de_cotation = new Scanner (System.in); 
             type_cotation = type_de_cotation.nextInt(); 
-            
-            while ( type_cotation!= 1 && type_cotation !=2){
-                System.out.println ("Veuillez entrer une réponse valide SVP!");
+
+            while ( type_cotation!= 1 && type_cotation!=2 && type_cotation!=3 && type_cotation!=4){
+                System.out.println ("Veuillez entrer une réponse valide comprise entre 1 et 4: ");
                 Scanner test = new Scanner (System.in); 
                 type_cotation = test.nextInt(); 
             }
-          
+
             // [Robin] Recuperer les informations depuis le fichier txt et les placer dans un tableau :
-            
-            int reponse_test[][] = {{0,1,0,1,0,0,0,1,0},{1,0,1,0,0,1,0,1,0},{1,0,0,0,1,0,1,0,1}} ; 
+
+            int reponse_test[] = {"abc", "bcd" , "def"}; 
             String justification_test [] = {"test", "test" , "test"}; 
-            
+
             // [Robin] Afficher les questions et les reponses (Utiliser un PRNG !):
-            
+
             System.out.println (" Question n°");
             System.out.println ("\t a)"); 
             System.out.println ("\t b)");
             System.out.println ("\t c)");
-            
+            System.out.println ("\t d)");
+            System.out.println ("\t e)");
+            System.out.println ("\t f)");
+
             // [Victor] Gerer les inputs de l'utilisateur :
-            
-            int reponse_utilisateur [][] = {{0,1,0,1,0,0,0,1,0},{1,0,1,0,0,1,0,1,0},{1,0,0,0,1,0,1,0,1}} ;
-            
+
+            int reponse_utilisateur [] = {"cde", "abc", "bc"} ;
+
             // [Julien] Calculer et afficher les resultats en fonction du mode de cotation par question :
-                        
+            
             separation(); 
             
             System.out.println ("Vous avez terminé votre questionnaire en" + "secondes");
             System.out.println ("Nous allons procéder à la vérification de vos réponses ... ");
-            
-            for (int j = 0; j < nombre_question ; j ++){ // N° de la question
-                System.out.println (" Question n°" + (j + 1)+ " :");
-                System.out.println (" \t Vous avez répondu : " );   
-                if (reponse_utilisateur[0][j] == 1){
-                    System.out.print(" A "); 
+  
+            for (int i = 0; i < nombre_question; i++)
+            {
+                System.out.println (" Question n°" + (i + 1)+ " :");
+                System.out.println (" \t Vous avez répondu : " + reponse_utilisateur[i]);
+                if (reponse_test[i].length > 1) {
+                    System.out.println ("\t Les bonnes réponses étaient : " + reponse_test[i]); 
+                }   
+                else if (reponses_test[i].length == 1) {
+                    System.out.println ("\t La bonne réponse était :" + reponse_test[i] +");
                 }
-                else if (reponse_utilisateur[1][j] == 1){
-                    System.out.print(" B "); 
+                else {
+                    System.out.println ("\t Aucune des réponses porposées n'est valide ! ");
                 }
-                else if (reponse_utilisateur[2][j] == 1){
-                    System.out.print(" C "); 
-                }
-                System.out.println (" La bonne réponse était la/les réponse(s) :");
-                if (reponse_test[0][j] == 1){
-                    System.out.print(" A "); 
-                }
-                else if (reponse_test[1][j] == 1){
-                    System.out.print(" B "); 
-                }
-                else if (reponse_test[2][j] == 1){
-                    System.out.print(" C "); 
-                }
+                
+                for (int j = 0; j < reponse[i].length(); j++)
+                {
+                    if (reponse_utilisateur[i].contains(reponse.charAt(j)))
+                    {
+                        reponses_vraies = reponses_vraies + reponse[i].charAt(j);
+                    }
+                    else 
+                    {
+                        reponses_fausses = reponses_fausses + reponse[i].charAt(j);
+                    }
                     
-                for (int i = 0; i < 3; i ++){ // Proposition (a,b ou c)
-                    // L'utilisateur a cocher la bonne réponse 
-                    if ((reponse_test[i][j] == 1 && reponse_utilisateur[i][j] == 1) ){
-                        System.out.println ( "\n Vous avez coché une bonne réponse !" ); 
-                        resultats_entrainement = resultats_entrainement + 1; 
-                        resultats_test = resultats_test + 1; 
+                    if (justification_test[i] != null) {
+                        System.out.println ("Justification : ");
+                        System.out.println ( "\t " + justification_test[i]); 
                     }
-                    // L'utilisateur a cocher une mauvaise réponse
-                    else if (reponse_test[i][j] == 0 && reponse_utilisateur[i][j] == 1 ){
-                        System.out.println (" \n Vous avez coché une mauvaise réponse !" );
-                        resultats_test = resultats_test - 1; 
-                    }
-                    // l'untilisateur n'a pas coche pas la réponse
-                    else if (reponse_test[i][j] == 1 && reponse_utilisateur[i][j] == 0){
-                        System.out.println (" \n Vous n'avez pas trouvé la réponse");
-                    }
-                 
-                    else if (i == 2 ){
-                        // Si la justification existe :
-                        if (justification_test[j] != null) {
-                            System.out.println (" Justification : " + justification_test[j]);
-                        }
-                        else {
-                            System.out.println (" Pas de justification disponible pour cette question ... ");
-                        }
+                    else {
+                        System.out.println ("Aucune justification disponible");
                     }
                 }
+                
+                for (int j = 0; j < reponse_utilisateur[i].length(); j++)
+                {
+                    if (!reponse[i].contains(reponse_utilisateur[i].charAt(j)))
+                    {
+                        reponses_fausses = reponses_fausses + reponse_utilisateur[i].charAt(j);
+                    }
+                }
+                
+                if (reponses_vraie.length > 1) {
+                    System.out.println ("\t Vous avez " + reponses_vraie.length  +" bonnes réponses"); 
+                }   
+                else if (reponses_vraie.length == 1) {
+                    System.out.println ("\t Vous avez " + reponses_vraie.length  +" bonne réponse");
+                }
+                else {
+                    System.out.println ("\t Vous n'avez aucune bonne réponse");
+                }
+                
+                if (reponses_fausses.length  > 1) {
+                    System.out.println ("\t Vous avez " + reponses_fausses.length +" mauvaises réponses"); 
+                }   
+                else if (reponses_fausses.length  == 1) {
+                    System.out.println ("\t Vous avez " + reponses_fausses.length +" mauvaise réponse");
+                }
+                else {
+                    System.out.println ("\t Vous n'avez pas de mauvaise réponse");
+                }
+                
+                // Calcul du resultat dans tout les mode de cotation : 
+                
+                resultats_facile = reponses_vraies.length ;
+                resultats_intermédiaire = reponses_vraies.length + (0.5*(reponses_fausses.length)); 
+                resultats_test = reponses_vraies.length + reponses_fausses.length; 
+               
+                // On reset les reponses de la question
+                
+                reponses_vraies =""; 
+                reponses_fausses =""; 
+                
             }
+
             // [Julien] Resumer les points obtenus en fonction du type de cotation:
-                   
-            separation(); 
             
-            if (type_cotation == 1){ // Mode entrainement 
-                System.out.println ("Vous avez obtenu :" + resultats_entrainement + " point(s)"); 
-                if (resultats_entrainement > 10) {
-                    System.out.println ("Félicitation, vous avez obtenu une note supérieur à la moyenne ! "); 
-                    System.out.println ("Vous auriez obtenu " + resultats_test + " point(s) en mode test"); 
+            separation(); 
+
+            if (type_cotation == 1){ // Mode facile 
+                
+                if (resultats_facile == 0) {
+                    System.out.println (" Attention : Aucune bonne réponse !"); 
                 }
-                else if (resultats_entrainement < 10) {
-                    System.out.println ("Attention, vous avez râté ce QCM ! Je vous conseil de vous entrainer avant de passer en mode test..."); 
+                else if (resultats_facile == 1){    
+                    System.out.println ("Attention : Une seule bonne réponse !");
                 }
+                else if (resultats_facile > 1 && resultats_facile < 10){
+                    System.out.print ("Attention : Vous êtes en échec ! Je vous conseil de passer en mode entrainement");
+                }
+                else {
+                    System.out.println ("Félicitation, je vous conseil de passer en mode intermédiaire ! "); 
+                }
+                
+                System.out.println ("Vous avez obtenu :" + resultats_facile + " point(s)"); 
+                
+            }
+
+            else if (type_cotation == 2){ // Mode intermédiaire
+                
+                 if (resultats_intermediaire > 10) {
+                     System.out.println ("Bravo ! Je vous conseil de passer en mode test ! "); 
+                    }
+                else {
+                    System.out.println ("Attention : Vous êtes en échec ! Je vous conseil de vous entrainer en mode entrainement..."); 
+                }
+                
+                System.out.println ("Vous avez obtenu :" + resultats_intermediaire + " point(s)"); 
+                
             }
             
-            else if (type_cotation == 2){ // Mode test
-                System.out.println ("Bravo ! Vous avez obtenu :" + resultats_test + " point(s)"); 
-                System.out.println ("Vous auriez obtenu" + resultats_entrainement + " point(s) en mode entrainement"); 
+            else if (type_cotation == 3){ // Mode test
+                
                 if (resultats_test > 10) {
-                    System.out.println ("Félicitation, vous avez obtenu une note supérieur à la moyenne ! "); 
-                    System.out.println ("Vous auriez obtenu " + resultats_entrainement + " point(s) en mode entrainement"); 
+                     System.out.println ("Félicitation ! Vous avez réussi ce QCM en difficulté maximale "); 
+                    }
+                else {
+                    System.out.println ("Attention : Vous êtes en échec ! Je vous conseil de vous entrainer en mode entrainement..."); 
                 }
-                else if (resultats_test < 10) {
-                    System.out.println ("Attention, vous avez râté ce QCM ! Je vous conseil de vous entrainer en mode entrainement..."); 
-                }
+                
+                System.out.println ("Vous avez obtenu :" + resultats_intermediaire + " point(s)"); 
+            
+            }
+            else {
+                System.out.println (" Voici les points que vous auriez obtenu dans les différents modes de cotation"); 
+                System.out.println (" \t Mode facile : " + resultats_facile + " points"); 
+                System.out.println (" \t Mode intermediaire : " + resultats_intermediaire + " points"); 
+                System.out.println (" \t Mode test :" + resultats_test + " points"); 
             }
             
             // [All] Faire une moyenne des résultats obtenus ? 
-            
+
             int moyenne_test [] = {}; 
             System.out.println ("Vous avez une moyenne de ...");
-            
+
             // [All] Reset les tableaux : 
-            
-            for (int a = 0; a <nombre_question; a++){
-                for (int b = 0; b < 3; b++) {
-                    reponse_test [a][b] = 0; 
-                    reponse_utilisateur [a][b] = 0; 
-                }
-            }
-            
+
             // [Julien ?] Relancer le questionnaire
-            
+
             System.out.println ("Voulez-vous recommencer ? (true/false)");
             Scanner sc = new Scanner (System.in); 
             again = sc.nextBoolean();   
 
         }while( again ==  true);   
+    
+        System.out.println (" A propos, ce QCM a été réalisé par Julien Banken, Robin Gielen et Victor Baert");
+        
     }
-}
+
+    public static String reponseUtilisateur ()
+    {
+        do {
+            String reponse_utilisateur;
+            char reponse = TextIO.getChar();
+            if (reponse!="a" && reponse!="b" && reponse!="c" && reponse!="d" && reponse!="e" && reponse!="f")
+            {
+                System.out.println ("Veuillez entrer une réponse valide SVP!");
+            }
+            else
+            {
+                if (reponse!="x") 
+                {
+                    reponse_utilisateur = reponse_utilisateur + reponse;
+                }
+            }
+        } while (reponse != "x");
+        return reponse_utilisateur;
+    }
+   
+    public static void separation (){
+        
+        System.out.println ("<");
+        for (int separation = 0; separation <=20; separation ++){
+            System.out.println ("="); 
+        } 
+        System.out.println (">");
+        
+        }  
+    }
