@@ -17,21 +17,12 @@ public class qcm
         int type_cotation;
         int colonne; 
         int ligne; 
-<<<<<<< HEAD
         int nombreQuestion; // Mis a jour lors de la lecture du fichier txt
-        int resultatsEntrainement;
-        int resultatsTest;
-        int resultatsIntermediaires;
         boolean again = false;
         String indexReponses = "abcdefghij";
                 int countQuestion; // Variable de test pour le compte des questions
                 
         int nombreReponsesMax; // Stock le nombre de reponses max pour une question
-    
-        // [Victor] Afficher les regles : 
-=======
-        int nombre_question = 10; 
->>>>>>> origin/master
         
         // Les reponses : 
         String reponses_vraies;
@@ -77,7 +68,6 @@ public class qcm
             }
 
             // [Robin] Recuperer les informations depuis le fichier txt et les placer dans un tableau :
-<<<<<<< HEAD
             String currentLine;
             BufferedReader br;
             
@@ -169,8 +159,8 @@ public class qcm
 =======
 
             int reponse_test[] = {"abc", "bcd" , "def"}; 
->>>>>>> origin/master
-            String justification_test [] = {"test", "test" , "test"}; 
+			
+            // String justification_test [] = {"test", "test" , "test"}; 
 
             // [Robin] Afficher les questions et les reponses (Utiliser un PRNG !):
 
