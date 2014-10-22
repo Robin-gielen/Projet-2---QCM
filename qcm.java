@@ -1,5 +1,6 @@
 import java.util.Scanner; 
 import java.lang.String; 
+import java.io.*;
 
 /**
  * Write a description of class qcm here.
@@ -24,10 +25,15 @@ public class qcm
         int type_cotation;
         int colonne; 
         int ligne; 
-        int nombre_question = 10; 
-        int resultats_entrainement = 0; 
-        int resultats_test = 0; 
+        int nombreQuestion; // Mis a jour lors de la lecture du fichier txt
+        int resultatsEntrainement;
+        int resultatsTest;
+        int resultatsIntermediaires;
         boolean again = false;
+        String indexReponses = "abcdefghij";
+                int countQuestion; // Variable de test pour le compte des questions
+                
+        int nombreReponsesMax; // Stock le nombre de reponses max pour une question
     
         // [Victor] Afficher les regles : 
         
@@ -52,8 +58,94 @@ public class qcm
             }
           
             // [Robin] Recuperer les informations depuis le fichier txt et les placer dans un tableau :
+            String currentLine;
+            BufferedReader br;
             
-            int reponse_test[][] = {{0,1,0,1,0,0,0,1,0},{1,0,1,0,0,1,0,1,0},{1,0,0,0,1,0,1,0,1}} ; 
+            try
+            {
+                br = new BufferedReader(new FileReader("qcm.txt"));
+                br.mark(1000000);
+                currentLine = br.readLine();
+                int countA = 0;
+                while (currentLine != null)
+                {
+                    countQuestion++;
+                    if (currentLine.charAt(0) == 'Q')
+                    {
+                        if (countA > nombreReponsesMax)
+                        {
+                            nombreReponsesMax = countA; 
+                            System.out.println(nombreReponsesMax); // Test afin de verifier la concordance
+                        }
+                        nombreQuestion++;
+                        System.out.println(countQuestion); // Test afin de verifier la concordance
+                        countA =0;
+                    }
+                    else if (currentLine.charAt(0) == 'A')
+                    {
+                        countA++;
+                    }
+                    currentLine = br.readLine();
+                }
+            } catch (IOException e) { System.exit(0);}
+            String questionnaire[][] = new String[nombreQuestion][2]; // Va stocker les questions et les reponses correctes pour chaque question
+            String reponsesEtudiant[] = new String[nombreQuestion]; // Va stocker les reponses de l etudiant
+            int nombreReponses[] = new int[nombreQuestion]; // Va stocker le nombre de reponses pour chaque question
+            String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Va stocker toutes les reponses pour chaque question
+            
+            try
+            {
+                br.reset();
+                currentLine = br.readLine();
+                int countQ = 0; // Compte a quelle question nous sommes actuellement
+                int countA = 0; // Compte a quelle reponse nous sommes dans la question en cours
+                while (currentLine != null)
+                {
+                    if (currentLine.charAt(0) == 'Q')
+                    {
+                        if (countQ !=0)
+                        {
+                            nombreReponses[countQ-1] = countA;
+                            countA = 0;
+                        }
+                        currentLine = currentLine.substring(1);
+                        questionnaire[countQ][1] = currentLine;
+                        countQ++;
+                    }
+                    else if (currentLine.charAt(0) == 'A')
+                    {
+                        reponsesQuestions[countQ-1][countA] = currentLine.substring(2 , currentLine.indexOf('|', 2) - 1);
+                        if (currentLine.charAt(currentLine.indexOf('|', 2) + 1) == 'V')
+                        {
+                            questionnaire[countQ-1][2] += indexReponses.charAt(countA);
+                        }
+                        countA++;
+                        System.out.println(questionnaire[countQ-1][2]);
+                    }
+                    currentLine = br.readLine();
+                }
+            } catch (IOException e) { System.exit(0);}
+            
+            try
+            {
+                br.reset();
+                currentLine = br.readLine();
+                int countQ = 0; // Compte a quelle question nous sommes actuellement
+                int countA = 0; // Compte a quelle reponse nous sommes dans la question en cours
+                while (currentLine != null)
+                {
+                    
+                
+                    currentLine = br.readLine();
+                }
+            } catch (IOException e) { System.exit(0);}
+            
+            /*
+             * A ce stade-ci, nous avons deux tableaux representatifs de la situation. Le premier contient les questions ainsi que les references des bonnes reponses et le deuxiemes contient toutes les reponses possible. 
+             * Ces deux tableaux vont nous servir non seulement afin d'afficher les questions et les reponses a l utilisateur afin qu il puisse y repondre, mais ils vont egalement nous servir a la correction des reponses donnes par l utilisateur.
+             */
+            
+            // int reponse_test[] = new int[8]; 
             String justification_test [] = {"test", "test" , "test"}; 
             
             // [Robin] Afficher les questions et les reponses (Utiliser un PRNG !):
@@ -74,7 +166,7 @@ public class qcm
             System.out.println ("Vous avez terminé votre questionnaire en" + "secondes");
             System.out.println ("Nous allons procéder à la vérification de vos réponses ... ");
             
-            for (int j = 0; j < nombre_question ; j ++){ // N° de la question
+            for (int j = 0; j < nombreQuestion ; j ++){ // N° de la question
                 System.out.println (" Question n°" + (j + 1)+ " :");
                 System.out.println (" \t Vous avez répondu : " );   
                 if (reponse_utilisateur[0][j] == 1){
