@@ -18,22 +18,22 @@ public class qcm
         int colonne; 
         int ligne; 
         int nombreQuestion; // Mis a jour lors de la lecture du fichier txt
-        String indexReponses = "abcdefghij";
+        String indexReponses = "abcdefghij"; // Variable pour avoir un acces facile aux 10 premieres lettre de l'alphabet, pour l'index des reponses
         int countQuestion; // Variable de test pour le compte des questions
                 
         int nombreReponsesMax; // Stock le nombre de reponses max pour une question
         
         // Les reponses : 
-        String reponses_vraies;
-        String reponses_fausses;
+        String reponses_vraies; // Variable conservant les reponses vraies 
+        String reponses_fausses; // Variable concervant les reponses de l'utilisateur
         
         // Les resultats : 
-        int resultats_facile = 0;
-        double resultats_intermédiaire = 0;
-        int resultats_test = 0;
+        int resultats_facile = 0; // Score de l utilisateur en mode facile
+        double resultats_intermédiaire = 0; // Score de l utilisateur en mode intermediaire
+        int resultats_test = 0; // Score de l utilisateur en mode test
         
         // Recommencer ?
-        boolean again = false;
+        boolean again = false; 
 
         // [Victor] Afficher les regles : 
 
