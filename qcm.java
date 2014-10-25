@@ -12,35 +12,34 @@ public class qcm
 {
     public static void main (String[] args) {    
 
-        // [All] Variables a initialiser : 
+        // [All] Initialisation des variables a initialiser : 
         
-        int type_cotation; 
-        int colonne; 
-        int ligne; 
-        int nombreQuestion; // Mis a jour lors de la lecture du fichier txt
+        int type_cotation; // Choix du type de cotation
+        int colonne; // Le numero de la colonne
+        int ligne; // Le numero de la ligne
+        int nombreQuestion; // Mise-a-jour lors de la lecture du fichier txt
         String indexReponses = "abcdefghij"; // Variable pour avoir un acces facile aux 10 premieres lettre de l'alphabet, pour l'index des reponses
         int countQuestion; // Variable de test pour le compte des questions
-                
+
+        // 1) Les reponses : 
         int nombreReponsesMax; // Stock le nombre de reponses max pour une question
+        String reponses_vraies; // Variable qui conserve les reponses vraies 
+        String reponses_fausses; // Variable qui conserve les reponses de l'utilisateur
         
-        // Les reponses : 
-        String reponses_vraies; // Variable conservant les reponses vraies 
-        String reponses_fausses; // Variable concervant les reponses de l'utilisateur
-        
-        // Les resultats : 
+        // 2) Les resultats : 
         int resultats_facile = 0; // Score de l utilisateur en mode facile
         double resultats_intermédiaire = 0; // Score de l utilisateur en mode intermediaire
         int resultats_test = 0; // Score de l utilisateur en mode test
         
-        // Recommencer ?
+        // 3) Recommencer a la fin du questionnaire ? 
         boolean again = false; 
 
         // [Victor] Afficher les regles : 
 
         System.out.println ("/n Les règles :");
-        System.out.println (" Chaque question s'affichera séparement avec toutes ses réponses et vous devrez alors entrer UNE réponse possible.");
-        System.out.println (" Vous aurez alors la possibilité de rentrer d'autres réponses possibles.");
-        System.out.println (" Une question, qui demande deux bonnes réponses en entrée et que vous ne répondez que par une seule bonne réponse, sera considerée comme fausse");
+        System.out.println (" Chaque question s'affichera séparement avec toutes ses proposition. Vous devrez alors entrer au minimim UNE réponse.");
+        System.out.println (" Vous pouvez entrer plusieurs réponses simultanément ");
+        System.out.println (" Attention : Une question, qui demande deux bonnes réponses en entrée et que vous ne répondez que par une seule bonne réponse, sera considerée comme fausse");
         System.out.println (" Il vous sera présenté 4 modes de correction différents."); 
         System.out.println (" \t 1) Le mode facile : + 1 par bonne réponse et 0 par mauvaise réponse"); 
         System.out.println (" \t 2) Le mode intermédiaire : + 1 par bonne réponse et - 0,5 par mauvaise réponse"); 
@@ -67,6 +66,7 @@ public class qcm
             }
 
             // [Robin] Recuperer les informations depuis le fichier txt et les placer dans un tableau :
+            
             String currentLine;
             BufferedReader br;
             
@@ -98,10 +98,10 @@ public class qcm
                 }
             } catch (IOException e) { System.exit(0);}
             
-            String questionnaire[][] = new String[nombreQuestion][2]; // Va stocker les questions et les reponses correctes pour chaque question
-            String reponsesEtudiant[] = new String[nombreQuestion]; // Va stocker les reponses de l etudiant
-            int nombreReponses[] = new int[nombreQuestion]; // Va stocker le nombre de reponses pour chaque question
-            String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Va stocker toutes les reponses pour chaque question
+            String questionnaire[][] = new String[nombreQuestion][2]; // Stocke les questions et les reponses correctes pour chaque question
+            String reponsesEtudiant[] = new String[nombreQuestion]; // Stocke les reponses de l etudiant
+            int nombreReponses[] = new int[nombreQuestion]; // Stocke le nombre de reponses pour chaque question
+            String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Stocke toutes les reponses pour chaque question
             
             // Combien de reponse au total ? Pour calculer la moyenne ? 
             
@@ -146,8 +146,6 @@ public class qcm
                 int countA = 0; // Compte a quelle reponse nous sommes dans la question en cours
                 while (currentLine != null)
                 {
-                    
-                
                     currentLine = br.readLine();
                 }
             } catch (IOException e) { System.exit(0);}
@@ -156,8 +154,6 @@ public class qcm
              * A ce stade-ci, nous avons deux tableaux representatifs de la situation. Le premier contient les questions ainsi que les references des bonnes reponses et le deuxiemes contient toutes les reponses possible. 
              * Ces deux tableaux vont nous servir non seulement afin d'afficher les questions et les reponses a l utilisateur afin qu il puisse y repondre, mais ils vont egalement nous servir a la correction des reponses donnes par l utilisateur.
              */
-
-            // exemple : String justification_test [] = {"test", "test" , "test"}; 
 
             // [Robin] Afficher les questions et les reponses (Utiliser un PRNG !):
 
@@ -175,34 +171,45 @@ public class qcm
             // [Julien] Calculer et afficher les resultats en fonction du mode de cotation par question :
             
             separation(); 
-            
-            System.out.println ("Vous avez terminé votre questionnaire en" + "secondes");
-            System.out.println ("Nous allons procéder à la vérification de vos réponses ... ");
 
+            System.out.println ("Maintenant , nous allons procéder à la vérification de vos réponses ... ");
   
             for (int i = 0; i < nombreQuestion; i++)
             {
                 System.out.println (" Question n°" + (i + 1)+ " :");
-                System.out.println (" \t Vous avez répondu : " + reponsesEtudiant[i]);
-                if (reponsesQuestions[i].length > 1) {
-                    System.out.println ("\t Les bonnes réponses étaient : " + reponsesQuestions[i]); 
+                System.out.println (); 
+                System.out.println (" \t" + reponsesQuestions[0][i]); 
+                System.out.println (" \t Vous avez répondu :" );
+                
+                for (int j = 0; j < reponsesEtudiant[i].length(); j++) {
+                    System.out.print (" " + reponsesEtudiant[i].charAt(j) + " ") ; 
+                }
+        
+                if (reponsesQuestions[1][i].length() > 1) {
+                    System.out.println ("\t Les bonnes réponses étaient : "); 
+                    for (int k = 0; k < reponsesQuestions[1][i].length(); k++) {
+                        System.out.print (" " + reponsesQuestions[1][i].charAt(k) + " ") ; 
+                    }
                 }   
-                else if (reponsesQuestions[i].length == 1) {
-                    System.out.println ("\t La bonne réponse était :" + reponsesQuestions[i]);
+                else if (reponsesQuestions[1][i].length() == 1) {
+                    System.out.println ("\t La bonne réponse était : ");
+                    for (int k = 0; k < reponsesQuestions[1][i].length(); k++) {
+                        System.out.print (" " + reponsesQuestions[1][i].charAt(k) + " ") ; 
+                    }
                 }
                 else {
                     System.out.println ("\t Aucune des réponses proposées n'est valide ! ");
                 }
                 
-                for (int j = 0; j < reponsesQuestions[i].length(); j++)
+                for (int l = 0; l < reponsesQuestions[1][i].length() ; l++)
                 {
-                    if (reponseEtudiant[i].contains(reponsesQuestions.charAt(j)))
+                    if (reponsesEtudiant[i].contains(reponsesQuestions[1][i].charAt(l)))
                     {
-                        reponses_vraies = reponses_vraies + reponsesQuestions[i].charAt(j);
+                        reponses_vraies = reponses_vraies + reponsesQuestions[1][i].charAt(l);
                     }
                     else 
                     {
-                        reponses_fausses = reponses_fausses + reponsesQuestions[i].charAt(j);
+                        reponses_fausses = reponses_fausses + reponsesQuestions[1][i].charAt(l);
                     }
                     
                     if (justification_test[i] != null) {
@@ -214,17 +221,15 @@ public class qcm
                     }
                 }
                 
-                // Resultat :
-				
-                for (int j = 0; j < reponseEtudiant[i].length(); j++)
+                for (int l = 0; l < reponseEtudiant[1][i].length(); l++)
                 {
-                    if (!reponsesQuestion[i].contains(reponseEtudiant[i].charAt(j)))
+                    if (!reponsesQuestion[1][i].contains(reponseEtudiant[i].charAt(l)))
                     {
-                        reponses_fausses = reponses_fausses + reponseEtudiant[i].charAt(j);
+                        reponses_fausses = reponses_fausses + reponseEtudiant[i].charAt(l);
                     }
                 }
-                
-                if (reponses_vraie.length > 1) {
+        
+                if (reponses_vraie.length() > 1) {
                     System.out.println ("\t Vous avez " + reponses_vraie.length  +" bonnes réponses"); 
                 }   
                 else if (reponses_vraie.length == 1) {
@@ -246,9 +251,9 @@ public class qcm
                 
                 // Resultats de tout les modes
                 
-                resultats_facile = reponses_vraies.length ;
-                resultats_intermédiaire = reponses_vraies.length + (0.5*(reponses_fausses.length)); 
-                resultats_test = reponses_vraies.length + reponses_fausses.length; 
+                resultats_facile = reponses_vraies.length() ;
+                resultats_intermédiaire = reponses_vraies.length() + (0.5*(reponses_fausses.length())); 
+                resultats_test = reponses_vraies.length() + reponses_fausses.length(); 
                
                 // On reset les reponses vraies et fausses pour chaque iteration
                 
@@ -282,7 +287,6 @@ public class qcm
 
             else if (type_cotation == 2){ // Mode intermédiaire
                 
-               
                 if (resultats_intermediaire < 10){
                     System.out.print ("Epreuve ratée !");
                 }
@@ -295,8 +299,7 @@ public class qcm
             }
             
             else if (type_cotation == 3){ // Mode test
-                
-                
+                                
                 if (resultats_intermediaire < 10){
                     System.out.print ("Epreuve ratée !");
                 }
@@ -333,14 +336,13 @@ public class qcm
         
     }
 
-	// Les autres methodes : 
-	
+    // Les autres methodes : 
+    
     public static String reponseUtilisateur ()
     {
         do {
             Scanner x = new Scanner (System.in); 
             char reponse = x.nextChar();
-			
             if (reponse!="a" && reponse!="b" && reponse!="c" && reponse!="d" && reponse!="e" && reponse!="f")
             {
                 System.out.println ("Veuillez entrer une réponse valide SVP!");
@@ -357,10 +359,9 @@ public class qcm
     }
    
     public static void separation (){
-        
         for (int separation = 0; separation <= 20; separation ++){
             System.out.println ("="); 
         } 
+        }
         
-        }  
     }
