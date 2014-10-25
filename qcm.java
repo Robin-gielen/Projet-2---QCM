@@ -101,7 +101,7 @@ public class qcm
             String questionnaire[][] = new String[nombreQuestion][2]; // Stocke les questions et les reponses correctes pour chaque question
             String reponsesEtudiant[] = new String[nombreQuestion]; // Stocke les reponses de l etudiant
             int nombreReponses[] = new int[nombreQuestion]; // Stocke le nombre de reponses pour chaque question
-            String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Stocke toutes les reponses pour chaque question
+            String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Stocke toutes les reponses pour chaque question sous forme de String
             
             // Combien de reponse au total ? Pour calculer la moyenne ? 
             
@@ -185,31 +185,31 @@ public class qcm
                     System.out.print (" " + reponsesEtudiant[i].charAt(j) + " ") ; 
                 }
         
-                if (reponsesQuestions[1][i].length() > 1) {
+                if (questionnaire[i][1].length() > 1) {
                     System.out.println ("\t Les bonnes réponses étaient : "); 
-                    for (int k = 0; k < reponsesQuestions[1][i].length(); k++) {
-                        System.out.print (" " + reponsesQuestions[1][i].charAt(k) + " ") ; 
+                    for (int k = 0; k < questionnaire[i][1].length(); k++) {
+                        System.out.print (" " + questionnaire[i][1].charAt(k) + " ") ; 
                     }
                 }   
-                else if (reponsesQuestions[1][i].length() == 1) {
+                else if (questionnaire[i][1].length() == 1) {
                     System.out.println ("\t La bonne réponse était : ");
-                    for (int k = 0; k < reponsesQuestions[1][i].length(); k++) {
-                        System.out.print (" " + reponsesQuestions[1][i].charAt(k) + " ") ; 
+                    for (int k = 0; k < questionnaire[i][1].length(); k++) {
+                        System.out.print (" " + questionnaire[i][1].charAt(k) + " ") ; 
                     }
                 }
                 else {
                     System.out.println ("\t Aucune des réponses proposées n'est valide ! ");
                 }
                 
-                for (int l = 0; l < reponsesQuestions[1][i].length() ; l++)
+                for (int l = 0; l < questionnaire[i][1].length() ; l++)
                 {
-                    if (reponsesEtudiant[i].contains(reponsesQuestions[1][i].charAt(l)))
+                    if (reponsesEtudiant[i].contains(questionnaire[i][1].charAt(l)))
                     {
-                        reponses_vraies = reponses_vraies + reponsesQuestions[1][i].charAt(l);
+                        reponses_vraies = reponses_vraies + questionnaire[i][1].charAt(l);
                     }
                     else 
                     {
-                        reponses_fausses = reponses_fausses + reponsesQuestions[1][i].charAt(l);
+                        reponses_fausses = reponses_fausses + questionnaire[i][1].charAt(l);
                     }
                     
                     if (justification_test[i] != null) {
@@ -223,7 +223,7 @@ public class qcm
                 
                 for (int l = 0; l < reponseEtudiant[1][i].length(); l++)
                 {
-                    if (!reponsesQuestion[1][i].contains(reponseEtudiant[i].charAt(l)))
+                    if (!questionnaire[i][1].contains(reponseEtudiant[i].charAt(l)))
                     {
                         reponses_fausses = reponses_fausses + reponseEtudiant[i].charAt(l);
                     }
