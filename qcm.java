@@ -104,6 +104,7 @@ public class qcm
             String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Stocke toutes les reponses pour chaque question sous forme de String
             
             // Combien de reponse au total ? Pour calculer la moyenne ? 
+            // Stocker dans la variable nombreReponses[i] avec i = numéro de la question 
             
             try
             {
