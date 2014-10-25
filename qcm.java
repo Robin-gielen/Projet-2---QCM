@@ -6,7 +6,7 @@ import java.io.*;
  * Write a description of class qcm here.
  * 
  * @author (Julien Banken, Robin Gielen, Victor Baert) 
- * @version (a version number or a date)
+ * @version (Octobre 2014)
  */
 public class qcm
 {
@@ -20,6 +20,7 @@ public class qcm
         int nombreQuestion; // Mise-a-jour lors de la lecture du fichier txt
         String indexReponses = "abcdefghij"; // Variable pour avoir un acces facile aux 10 premieres lettre de l'alphabet, pour l'index des reponses
         int countQuestion; // Variable de test pour le compte des questions
+		int total; // Variable qui contient le nombre total de bonne reponse 
 
         // 1) Les reponses : 
         int nombreReponsesMax; // Stock le nombre de reponses max pour une question
@@ -102,10 +103,7 @@ public class qcm
             String reponsesEtudiant[] = new String[nombreQuestion]; // Stocke les reponses de l etudiant
             int nombreReponses[] = new int[nombreQuestion]; // Stocke le nombre de reponses pour chaque question
             String reponsesQuestions[][] = new String[nombreQuestion][nombreReponsesMax]; // Stocke toutes les reponses pour chaque question sous forme de String
-            
-            // Combien de reponse au total ? Pour calculer la moyenne ? 
-            // Stocker dans la variable nombreReponses[i] avec i = numéro de la question 
-            
+
             try
             {
                 br.reset();
@@ -166,9 +164,6 @@ public class qcm
             System.out.println ("\t e)");
             System.out.println ("\t f)");
 
-            // [Victor] Gerer les inputs de l'utilisateur :
-
-            
             // [Julien] Calculer et afficher les resultats en fonction du mode de cotation par question :
             
             separation(); 
@@ -262,7 +257,11 @@ public class qcm
                 reponses_fausses =""; 
                 
             }
-
+			
+			for (int i = 0; i < nombreReponses.length; i++){
+                total = nombreReponses[i] + total;  
+            }
+			
             // [Julien] Resumer les points obtenus en fonction du type de cotation:
             
             separation(); 
@@ -275,7 +274,7 @@ public class qcm
                 else if (resultats_facile == 1){    
                     System.out.println ("Attention : Une seule bonne réponse !");
                 }
-                else if (resultats_facile > 1 && resultats_facile < 10){
+                else if (resultats_facile > 1 && resultats_facile < (total/2)){
                     System.out.print ("Epreuve ratée !");
                 }
                 else {
@@ -288,7 +287,7 @@ public class qcm
 
             else if (type_cotation == 2){ // Mode intermédiaire
                 
-                if (resultats_intermediaire < 10){
+                if (resultats_intermediaire < (total/2)){
                     System.out.print ("Epreuve ratée !");
                 }
                 else {
@@ -301,7 +300,7 @@ public class qcm
             
             else if (type_cotation == 3){ // Mode test
                                 
-                if (resultats_intermediaire < 10){
+                if (resultats_intermediaire < (total/2)){
                     System.out.print ("Epreuve ratée !");
                 }
                 else {
