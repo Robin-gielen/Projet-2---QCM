@@ -4,12 +4,12 @@ import java.io.*;
 import java.util.Random;
 
 /**
- * Classe principal pour le QCM
+ * Write a description of class qcm here.
  * 
  * @author (Julien Banken, Robin Gielen, Victor Baert) 
- * @version 27/10/2014 
+ * @version (a version number or a date)
  */
-public class QCM
+public class qcm
 {
     public static void main (String[] args) {    
 
@@ -223,7 +223,7 @@ public class QCM
                 System.out.println(questionnaire[i-1][0]);
                 for (int j=0;   j < nombreReponsesMax && !(reponsesQuestions[i-1][j] == null); j++)
                 {
-                    System.out.println("Reponse " + (j+1) + ")");
+                    System.out.println("Reponse " + (j+1) + "]");
                     System.out.println(reponsesQuestions[i-1][j].substring(0, reponsesQuestions[i-1][j].indexOf('|', 2)));
                 }
                 System.out.println("Veuillez entrer vos reponses en entrant les numeros de celle-ci un par un, lorsque vous avez finis de choisir toutes vos reponses, entrez " + (nombreReponses[i-1]+1) + " pour passer a la question suivante");
@@ -397,7 +397,15 @@ public class QCM
                     String justification = null;
                     if (occurence(reponsesQuestions[i][j], '|') == 2)
                     {
-                        System.out.println("Il existe une justification pour une reponse de la question n° " + (i+1));
+                        System.out.println("Il existe une justification pour une reponse de la question n°" + (i+1) + " : ");
+                        
+                        System.out.println(questionnaire[i][0]);
+                        for (int k=0; k<nombreReponses[i]; k++)
+                        {
+                            System.out.println("Reponse " + (k) + "]");
+                            System.out.println(reponsesQuestions[i][k].substring(0, reponsesQuestions[i][k].indexOf('|', 2)));
+                        } 
+                        
                         if (reponsesQuestions[i][j].charAt(reponsesQuestions[i][j].indexOf('|') + 1) == 'V')
                         {
                             justification = reponsesQuestions[i][j].substring(reponsesQuestions[i][j].lastIndexOf('|')+1);
@@ -406,7 +414,7 @@ public class QCM
                         if (reponsesQuestions[i][j].charAt(reponsesQuestions[i][j].indexOf('|') + 1) == 'X')
                         {
                             justification = reponsesQuestions[i][j].substring(reponsesQuestions[i][j].lastIndexOf('|')+1);
-                            System.out.println("La reponse " + (j+1) + " etait fausse car " + justification);
+                            System.out.println("La reponse n°" + (j+1) + " etait fausse car " + justification);
                         }
                     }
                 }
