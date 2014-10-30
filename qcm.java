@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.Random;
 
 /**
- * Write a description of class qcm here.
+ * Classe principale de notre QCM
  * 
  * @author (Julien Banken, Robin Gielen, Victor Baert) 
- * @version (a version number or a date)
+ * @version 31/10/2014
  */
 public class qcm
 {
@@ -36,15 +36,14 @@ public class qcm
         boolean again = false; 
 
         // Afficher les regles : 
-        System.out.println ("/n Les règles :");
-        System.out.println (" Chaque question s'affichera séparement avec toutes ses proposition. Vous devrez alors entrer au minimim UNE réponse.");
-        System.out.println (" Vous pouvez entrer plusieurs réponses simultanément ");
-        System.out.println (" Attention : Une question, qui demande deux bonnes réponses en entrée et que vous ne répondez que par une seule bonne réponse, sera considerée comme fausse");
-        System.out.println (" Il vous sera présenté 4 modes de correction différents."); 
-        System.out.println (" \t 1) Le mode facile : + 1 par bonne réponse et 0 par mauvaise réponse"); 
-        System.out.println (" \t 2) Le mode intermédiaire : + 1 par bonne réponse et - 0,5 par mauvaise réponse"); 
-        System.out.println (" \t 3) Le mode de test : + 1 par bonne réponse et - 1 par mauvaise réponse"); 
-        System.out.println (" \t 4) le mode d'entrainement qui affichera vos points pour chacun des modes de correction. "); 
+        System.out.println ("\nLes règles :");
+        System.out.println ("Chaque question s'affichera séparement avec toutes ses proposition. Vous devrez alors entrer vos réponse.");
+        System.out.println ("Attention : Une question, qui demande deux bonnes réponses en entrée et que vous ne répondez que par une seule bonne reponse, sera considerée comme fausse");
+        System.out.println ("Il vous sera presenté 4 modes de correction différents."); 
+        System.out.println ("\t 1) Le mode facile : + 1 par bonne réponse et 0 par mauvaise réponse"); 
+        System.out.println ("\t 2) Le mode intermédiaire : + 1 par bonne réponse et - 0,5 par mauvaise réponse"); 
+        System.out.println ("\t 3) Le mode de test : + 1 par bonne réponse et - 1 par mauvaise réponse"); 
+        System.out.println ("\t 4) le mode d'entrainement qui affichera vos points pour chacun des modes de correction. "); 
         
         /**
          * Methode qui va permettre de tirer les informations du fichier texte et de les stocker dans des tableaux pour plus de facilite lors de l utilisation des donnees
@@ -141,12 +140,13 @@ public class qcm
             //Choix du type de cotation :
             
             System.out.println ("Veuillez entrer votre mode de cotation : ");
-            System.out.println ("\t 1) Le mode facile"); 
-            System.out.println ("\t 2) Le mode intermediaire"); 
-            System.out.println ("\t 3) Le mode test"); 
-            System.out.println ("\t 4) Le mode entrainement"); 
-            
-            
+            if (again)
+            {
+                System.out.println(" \t 1) Le mode facile : + 1 par bonne réponse et 0 par mauvaise réponse");
+                System.out.println (" \t 2) Le mode intermédiaire : + 1 par bonne réponse et - 0,5 par mauvaise réponse"); 
+                System.out.println (" \t 3) Le mode de test : + 1 par bonne réponse et - 1 par mauvaise réponse"); 
+                System.out.println (" \t 4) le mode d'entrainement qui affichera vos points pour chacun des modes de correction. "); 
+            }
             Scanner type_de_cotation = new Scanner (System.in); 
             type_cotation = type_de_cotation.nextInt(); 
             
@@ -223,10 +223,11 @@ public class qcm
                 System.out.println(questionnaire[i-1][0]);
                 for (int j=0;   j < nombreReponsesMax && !(reponsesQuestions[i-1][j] == null); j++)
                 {
-                    System.out.println("Reponse " + (j+1) + "]");
-                    System.out.println(reponsesQuestions[i-1][j].substring(0, reponsesQuestions[i-1][j].indexOf('|', 2)));
+                    System.out.print("\t Reponse " + (j+1) + "]");
+                    System.out.println(" " + reponsesQuestions[i-1][j].substring(0, reponsesQuestions[i-1][j].indexOf('|', 2)));
                 }
-                System.out.println("Veuillez entrer vos reponses en entrant les numeros de celle-ci un par un, lorsque vous avez finis de choisir toutes vos reponses, entrez " + (nombreReponses[i-1]+1) + " pour passer a la question suivante");
+                System.out.println("Veuillez entrer vos reponses en entrant les numeros de celle-ci un par un, ");
+                System.out.println("lorsque vous avez finis de choisir toutes vos reponses, entrez " + (nombreReponses[i-1]+1) + " pour passer a la question suivante");
                 reponsesEtudiant[i-1] = reponseUtilisateur(nombreReponses[i-1], indexReponses);
             }
             
@@ -402,7 +403,7 @@ public class qcm
                         System.out.println(questionnaire[i][0]);
                         for (int k=0; k<nombreReponses[i]; k++)
                         {
-                            System.out.println("Reponse " + (k) + "]");
+                            System.out.print("\t Reponse " + (k+1) + "] ");
                             System.out.println(reponsesQuestions[i][k].substring(0, reponsesQuestions[i][k].indexOf('|', 2)));
                         } 
                         
@@ -452,7 +453,7 @@ public class qcm
             {
                 reponse = x.nextInt();
             } catch (Exception e) {}
-            if (reponse < 1 || reponse > nombreReponse)
+            if (reponse < 1 || reponse > nombreReponse + 1)
             {
                 System.out.println ("Veuillez entrer une réponse valide !");
             }
@@ -526,13 +527,3 @@ public class qcm
     }
     
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
